@@ -1,5 +1,6 @@
 #include "LinkedList.h"
 #include "testCase.h"
+bool isNum(char* stringArray); //forward declaration of isNum - a helper function for checking if a C-style string is an integer number or not
 int main(int argc, char *argv[] )
 {
   void (*testCases[5])(); //create an array of function pointers
@@ -19,25 +20,49 @@ int main(int argc, char *argv[] )
   }
   if (argc == 2) //if the number of supplied arguments is one
   {
-    for(int i = 0; argv[1][i]!='\0'; i++) //check if the input is a valid number by checking each character in the supplied argument to see if it is a digit
+    if(!isNum(argv[1])) //if the single argument is not a number, print a warning and terminate the program
     {
-      if (!isdigit(argv[1][i]))
-      {
-        cout << "ERROR: The provided argument must be an integer number!" << endl;
-        return 0;
-      }
+      cout << "Invalid input. You must provide an integer number to use this program" << endl;
+      return 0;
     }
-    int selection = atoi(argv[1]);
-    if (selection < 1 || selection > 5)
+    int selection = atoi(argv[1])-1; //convert the argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
+    if (selection+1 < 1 || selection+1 > 5) //check if the argument is a valid test case. If not, print a warning and terminate the program Note that the upper bound needs to be updated each time a new test case is added. This could be fixed by using a vector of function pointers rather than an array and caling .size(), however I am partial to keeping the overhead low
     {
-      cout << "Invalid test case parameter: " << selection << " is not a valid test case." << endl;
+      cout << "Invalid test case parameter: " << selection+1 << " is not a valid test case." << endl; //note that because of the -1 for calculationg the selection, +1 is needed to properly display the erroneous selection
       return 0;
     }
     //if it is a valid number, call the appropriate test case
-    testCases[atoi(argv[1])-1]();
+    testCases[selection]();
 
   }
-
-
+  if (argc == 3) //if the number of supplied arguments is three
+  {
+    if ( (!(isNum(argv[1]))) || (!(isNum(argv[2])))) //if either or both arguments are not integer numbers, print a warning and terminate the program
+    {
+      cout << "Invalid input. You must provide integer numbers to use this program" << endl;
+      return 0;
+    }
+    int selectionOne =  atoi(argv[1])-1; //convert the first argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
+    int selectionTwo =  atoi(argv[2])-1; //convert the second argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
+    if (selectionOne > selectionTwo) //if one of the arguments is greater than the other one, swap them using the standard library's swap function
+      swap(selectionOne, selectionTwo);
+    for (int i = selectionOne; i <= selectionTwo; i++)
+    {
+      testCases[i]();
+    }
+  }
   return 0;
+}
+
+bool isNum(char* charArray) //checks if a given c-style string is an integer number or not
+{
+  for(int i = 0; charArray[i]!='\0'; i++) //check if the input is a valid number by checking each character in the supplied argument to see if it is a digit. Returns true if it is, false if it is not
+  {
+    if (!isdigit(charArray[i]))
+    {
+      cout << "ERROR: The provided argument must be an integer number!" << endl;
+      return false;
+    }
+  }
+  return true;
 }

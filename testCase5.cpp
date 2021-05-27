@@ -32,4 +32,24 @@ void testCaseFive()
   //testFiveReversed.insert(3,400);// - list becomes [3,2,1,400,0] | 5
   //testFiveReversed.insert(4,400);// - list becomes [3,2,1,0, 400] | 5
   testFiveReversed.printer();
+
+  //test on inserting node values on invalid locations and inserting into an empty list. Also performed on a reversed list
+  cout << endl << "TEST 5 ROUND 3" << endl << endl;
+  DoublyLinkedList testFiveEmpty;
+  //testFiveEmpty.insert(-1, 500); //uncomment to throw an error
+  //testFiveEmpty.insert(1, 500); //uncomment to throw an error
+  testFiveEmpty.insert(0, 500);
+  testFiveEmpty.printer();
+  //testFiveEmpty.insert(-1, 500); //uncomment to throw an error
+  //testFiveEmpty.insert(2, 500); //uncomment to throw an error
+
+  cout << endl << "TEST 5 ROUND 4" << endl << endl;
+  DoublyLinkedList testFiveEmptyReversed;
+  testFiveEmptyReversed.reverse();
+  //testFiveEmptyReversed.insert(-1, 500); //uncomment to throw an error
+  //testFiveEmptyReversed.insert(1, 500); //uncomment to throw an error
+  testFiveEmptyReversed.insert(0, 500);
+  testFiveEmptyReversed.printer();
+  //testFiveEmptyReversed.insert(-1, 500); //uncomment to throw an error
+  //testFiveEmptyReversed.insert(2, 500); //uncomment to throw an error
 }

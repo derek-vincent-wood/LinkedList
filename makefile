@@ -18,3 +18,4 @@ LinkedListTest:$(OFILES)
 clean:
 	rm *.o
 	rm LinkedListTest
+	rm *.stackdump

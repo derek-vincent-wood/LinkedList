@@ -243,6 +243,32 @@ void DoublyLinkedList :: del(int position) //deletes a value at the specified lo
   }
 }
 
+void DoublyLinkedList :: clear() //clear the list - used by the destructor to erase all elements - this is critical to avoid memnory leaks since all of the list nodes are on the heap and will not be automatically deleted
+{
+  ListNode* currentNode = leftmostNode; //start with the current node being the leftmost node of the list
+  ListNode* nextNode = NULL; //do not set the next node to anything until it is needed. If the leftNode does not exist (i.e. the list is empty), setting the next node to some attribute/method of the current node will cause a seg fault. The same will happen if the current node exists, but the next node does not exist (ex. list size of 1) and one tries to access attributes/methods of the next node
+
+  if (size == 0){} //if the size is 0, nothing should be done. As a design choice, I'm opting not to throw an error. The reasoning for this is if a user has many lists and they need to clear them, they should not have to worry about whether a list is empty or not, only that it has no elements when they are done regardless
+  else if (size == 1) //if there is only one element of the list, then only delete the leftmost node (which is the same node as the rightmost node), and set the leftmost and rightmost nodes both to NULL
+  {
+    delete leftmostNode;
+    leftmostNode = NULL;
+    rightmostNode = NULL;
+    size -= 1;
+  }
+  else //if the size is greater than 1
+  {
+    nextNode = currentNode->getRightNode();
+    while (nextNode != NULL) //iterate over all of the nodes in the list, deleting them until the next node is NULL - Note that by using the next node as the exit condition, the final currentNode will have to be deleted outside of the while loop. This is done to ensure that all list nodes can be deleted, but without accidentally causing a segmentation fault when trying to update the next node when the current next node is updated
+    {
+      delete currentNode; //delete the current node
+      currentNode = nextNode; //set the current node to the next node
+      nextNode = currentNode->getRightNode(); //update the next node to being its neighbor
+    }
+    delete currentNode;
+    size = 0;
+  }
+}
 void DoublyLinkedList :: printer() //generic printer function - meant to print out the list in order with respect to it being (not) reversed as needed to support debugging. Formats the list using brackets and commas, with the size of the list following the print out
 {
   cout << "[";

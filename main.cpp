@@ -10,6 +10,7 @@ int main(int argc, char *argv[] )
   testCases[3] = testCaseFour;
   testCases[4] = testCaseFive;
   testCases[5] = testCaseSix;
+  testCases[6] = testCaseSeven;
   if (argc <= 1) //
   { cout << "Hello!" <<endl;
     cout << "This program is meant to act as the driver for the test cases for the Doubly Linked List implementation that I am working on." << endl;
@@ -27,7 +28,7 @@ int main(int argc, char *argv[] )
       return 0;
     }
     int selection = atoi(argv[1])-1; //convert the argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
-    if (selection+1 < 1 || selection+1 > 6) //check if the argument is a valid test case. If not, print a warning and terminate the program Note that the upper bound needs to be updated each time a new test case is added. This could be fixed by using a vector of function pointers rather than an array and caling .size(), however I am partial to keeping the overhead low
+    if (selection+1 < 1 || selection+1 > 7) //check if the argument is a valid test case. If not, print a warning and terminate the program Note that the upper bound needs to be updated each time a new test case is added. This could be fixed by using a vector of function pointers rather than an array and caling .size(), however I am partial to keeping the overhead low
     {
       cout << "Invalid test case parameter: " << selection+1 << " is not a valid test case." << endl; //note that because of the -1 for calculationg the selection, +1 is needed to properly display the erroneous selection
       return 0;
@@ -45,13 +46,13 @@ int main(int argc, char *argv[] )
     }
     int selectionOne =  atoi(argv[1])-1; //convert the first argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
     int selectionTwo =  atoi(argv[2])-1; //convert the second argument from a character array to an integer and subtract 1 to make it correspond to the testCases array
-    if (selectionOne+1 < 1 || selectionOne+1 > 6) //check if the first argument is a valid test case. If not, print a warning and terminate the program
+    if (selectionOne+1 < 1 || selectionOne+1 > 7) //check if the first argument is a valid test case. If not, print a warning and terminate the program
     {
       cout << "Invalid test case parameter: " << selectionOne+1 << " is not a valid test case." << endl;
       return 0;
     }
 
-    if (selectionTwo+1 < 1 || selectionTwo+1 > 6) //check if thesecond argument is a valid test case. If not, print a warning and terminate the program
+    if (selectionTwo+1 < 1 || selectionTwo+1 > 7) //check if thesecond argument is a valid test case. If not, print a warning and terminate the program
     {
       cout << "Invalid test case parameter: " << selectionTwo+1 << " is not a valid test case." << endl;
       return 0;

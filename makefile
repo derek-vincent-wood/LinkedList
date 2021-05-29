@@ -1,4 +1,4 @@
-CPPFILES = LinkedList.cpp testCase1.cpp testCase2.cpp testCase3.cpp testCase4.cpp testCase5.cpp testCase6.cpp main.cpp
+CPPFILES = LinkedList.cpp testCase1.cpp testCase2.cpp testCase3.cpp testCase4.cpp testCase5.cpp testCase6.cpp testCase7.cpp main.cpp
 
 HFILES = $(CPPFILES:.cpp=.h)
 

@@ -5,4 +5,5 @@ void testCaseTwo();
 void testCaseThree();
 void testCaseFour();
 void testCaseFive();
+void testCaseSix();
 #endif

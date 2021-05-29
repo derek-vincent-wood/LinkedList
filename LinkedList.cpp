@@ -184,12 +184,65 @@ void DoublyLinkedList :: insert(int position, int value) //inserts a value at th
     {
       isReversed = false; //disable the reversed flag temporarily
       int nonReversedIndex = size - position; //calculate the non-reversed index
-      cout<<to_string(size)<<","<<to_string(position)<<","<<to_string(nonReversedIndex)<<endl;
+      //cout<<to_string(size)<<","<<to_string(position)<<","<<to_string(nonReversedIndex)<<endl;
       insert(nonReversedIndex, value);
       isReversed = true;
     }
   }
 }
+
+void DoublyLinkedList :: del(int position) //deletes a value at the specified location within the list
+{
+  if (position == 0 && size == 0) //if the list is empty and the position is 0, then the list is empty, so print and throw an error
+  {
+    cout << "ERROR: Deleting from an empty list" << endl;
+    throw("ERROR: Deleting from an empty list");
+  }
+  else if (position < 0 || position >= size) //if the position is less than 0 or greater or equal to  the size of the list, print and throw a boundary error
+  {
+    cout << "ERROR: Index out of bounds" << endl;
+    throw("ERROR: Index out of bounds");
+  }
+  if (position == 0 && size == 1) //if the position is 0 and there is only one element in the list, then the leftmost and rightmost nodes are the same node, thus that node should be deleted and both pointers should be set to NULL
+  {
+    delete leftmostNode; //delete the only node in the list
+    size--; //decrement the size
+    leftmostNode = NULL; //set the leftmost and rightmost nodes to null
+    rightmostNode = NULL;
+  }
+  else if (position == 0) //if the position is 0 and there is more than one node in the list
+  {
+    //since the goal is remove the first element, a trick can be used. Reverse (or unreverse) the list, call pop to remove the first element, and re-reverse/re-unreverse the list. This should remove the first element of the list regardless of whether the list is reversed or not
+    isReversed = !isReversed; //negate isReversed
+    pop(); //call pop
+    isReversed = !isReversed; //undo the negation of isReversed
+  }
+  else if (position == size - 1) //if the node being deleted is at the end of the list, just call pop()
+  {
+    pop();
+  }
+  else  //if the element being deleted is not at either end
+  {
+    if (isReversed) //if the list is reversed, recalculate the position to reflect the non-reversed version of the list. The formula is size - position - 1
+      position = size - position -1;
+    //the way this portion of the code works is that the following for loop will iterate over the list of node, maintaining references to the current node (located at i), its left node (located at i - 1), and its right node (located at i + 1). Once i == position, the node located at i will be deleted, and the left node's right node will be set to the right node, and the right node's left node will be set to the left node (a visual will probably help
+    ListNode *leftNode = NULL;
+    ListNode *currentNode = leftmostNode;
+    ListNode *rightNode = currentNode->getRightNode();
+    for (int i = 0; i != position; i++)
+    {
+      currentNode = currentNode->getRightNode(); //move to the next node
+      leftNode = currentNode->getLeftNode(); //update the left node
+      rightNode = currentNode->getRightNode(); //update the right node
+    }
+    //once the current node is the node at i, make the neccessarry adjustments to allow for removal as specified
+    delete currentNode;
+    leftNode->setRightNode(rightNode);
+    rightNode->setLeftNode(leftNode);
+    size--;
+  }
+}
+
 void DoublyLinkedList :: printer() //generic printer function - meant to print out the list in order with respect to it being (not) reversed as needed to support debugging. Formats the list using brackets and commas, with the size of the list following the print out
 {
   cout << "[";
